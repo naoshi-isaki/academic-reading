@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アカデミック・リーディングの作法・技法・用法</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --ink-light: #3d3530;
+    --ink-muted: #7a6f68;
+    --paper: #f8f4ef;
+    --paper-warm: #f0ebe3;
+    --paper-dark: #e8e0d5;
+    --accent: #8b2c2c;
+    --accent-light: #c4534a;
+    --accent-pale: #f5e9e9;
+    --rule: #c8bdb4;
+    --sidebar-w: 260px;
+    --content-max: 820px;
+    --serif: 'Noto Serif JP', 'Georgia', serif;
+    --sans: 'Noto Sans JP', 'Helvetica Neue', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Layout ─── */
+  .site-layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ─── Sidebar / TOC ─── */
+  .toc-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--ink);
+    color: #d4c9be;
+    padding: 2rem 0 4rem;
+    z-index: 100;
+    font-family: var(--sans);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .toc-sidebar::-webkit-scrollbar { width: 4px; }
+  .toc-sidebar::-webkit-scrollbar-thumb { background: #5a4f46; }
+
+  .toc-logo {
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid #3a332e;
+    margin-bottom: 1.25rem;
+  }
+
+  .toc-logo-label {
+    font-size: 9px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: #7a6f68;
+    display: block;
+    margin-bottom: .35rem;
+  }
+
+  .toc-logo-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #c8b89e;
+    line-height: 1.5;
+  }
+
+  .toc-nav { flex: 1; }
+
+  .toc-section {
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #5a4f46;
+    padding: .8rem 1.5rem .25rem;
+    margin-top: .5rem;
+  }
+
+  .toc-nav a {
+    display: block;
+    padding: .3rem 1.5rem;
+    font-size: 12px;
+    color: #a09080;
+    text-decoration: none;
+    transition: all .15s;
+    line-height: 1.5;
+    border-left: 2px solid transparent;
+  }
+
+  .toc-nav a:hover,
+  .toc-nav a.active {
+    color: #e8d8c4;
+    border-left-color: var(--accent-light);
+    background: rgba(255,255,255,.03);
+  }
+
+  .toc-nav a.sub {
+    padding-left: 2.25rem;
+    font-size: 11px;
+    color: #7a6f68;
+  }
+
+  .toc-nav a.sub:hover { color: #c0a890; }
+
+  /* ─── Main Content ─── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 0;
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: linear-gradient(160deg, #2a1f1a 0%, #1a1410 50%, #0e0c0a 100%);
+    color: #e8d8c4;
+    padding: 6rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Ccircle cx='30' cy='30' r='.5' fill='%23ffffff08'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero-kana {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: .3em;
+    color: var(--accent-light);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: .75rem;
+    letter-spacing: .05em;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: #a09080;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: #7a6f68;
+  }
+
+  .hero-meta span { display: flex; align-items: center; gap: .4rem; }
+
+  .hero-epigraph {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #3a322a;
+    font-size: .85rem;
+    color: #7a6868;
+    font-style: italic;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  .hero-epigraph cite {
+    display: block;
+    font-style: normal;
+    font-size: .75rem;
+    color: #5a5050;
+    margin-top: .5rem;
+    letter-spacing: .05em;
+    font-family: var(--sans);
+  }
+
+  /* ─── Content area ─── */
+  .content {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 4rem 3rem 6rem;
+  }
+
+  /* ─── Premise box ─── */
+  .premise-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .premise-card {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent);
+    padding: 1.5rem;
+    border-radius: 2px;
+  }
+
+  .premise-card h4 {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .75rem;
+  }
+
+  .premise-card ul {
+    font-size: .875rem;
+    list-style: none;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+
+  .premise-card ul li { padding-left: 1rem; position: relative; }
+  .premise-card ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--rule);
+  }
+
+  /* ─── Part headers ─── */
+  .part-header {
+    margin: 4rem 0 2rem;
+    padding: 2rem 2.5rem;
+    background: var(--ink);
+    color: #e8d8c4;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .part-header::after {
+    content: attr(data-part);
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: rgba(255,255,255,.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .part-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: .3em;
+    color: var(--accent-light);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: .5rem;
+  }
+
+  .part-header h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+  }
+
+  /* ─── Section headers ─── */
+  .section {
+    margin: 3rem 0 0;
+    scroll-margin-top: 2rem;
+  }
+
+  .section h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: .5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink-light);
+    margin: 2rem 0 .75rem;
+    border-left: 3px solid var(--accent);
+    padding-left: .75rem;
+  }
+
+  .section h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink-light);
+    margin: 1.5rem 0 .5rem;
+  }
+
+  /* ─── Body text ─── */
+  p {
+    margin-bottom: 1rem;
+    font-size: .9375rem;
+  }
+
+  /* ─── Bullet lists ─── */
+  ul.body-list, ol.body-list {
+    padding-left: 0;
+    list-style: none;
+    margin: .75rem 0 1rem;
+  }
+
+  ul.body-list li, ol.body-list li {
+    padding-left: 1.25rem;
+    position: relative;
+    font-size: .9rem;
+    margin-bottom: .35rem;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+
+  ul.body-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: .75rem;
+    top: .15em;
+  }
+
+  ol.body-list { counter-reset: item; }
+  ol.body-list li::before {
+    counter-increment: item;
+    content: counter(item) '.';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: .8rem;
+    font-family: var(--sans);
+    top: .1em;
+  }
+
+  /* ─── Blockquotes ─── */
+  blockquote {
+    border-left: 3px solid var(--rule);
+    padding: .75rem 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--ink-light);
+    font-size: .875rem;
+    line-height: 1.8;
+    background: var(--paper-warm);
+  }
+
+  blockquote cite {
+    display: block;
+    font-style: normal;
+    font-size: .8rem;
+    color: var(--ink-muted);
+    margin-top: .5rem;
+    font-family: var(--sans);
+  }
+
+  /* ─── Tables ─── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .8rem;
+    font-family: var(--sans);
+  }
+
+  table caption {
+    text-align: left;
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--ink-muted);
+    padding: .5rem .75rem;
+    background: var(--paper-dark);
+    border-bottom: 1px solid var(--rule);
+    caption-side: top;
+    font-family: var(--sans);
+  }
+
+  th {
+    background: var(--ink);
+    color: #e8d8c4;
+    text-align: left;
+    padding: .6rem .75rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  td {
+    padding: .55rem .75rem;
+    border-bottom: 1px solid var(--paper-dark);
+    vertical-align: top;
+    line-height: 1.6;
+    color: var(--ink-light);
+  }
+
+  tr:nth-child(even) td { background: var(--paper-warm); }
+  tr:last-child td { border-bottom: none; }
+
+  /* ─── Call-out boxes ─── */
+  .callout {
+    border-radius: 2px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: .875rem;
+  }
+
+  .callout-info {
+    background: #eef2f8;
+    border-left: 4px solid #4a72a8;
+    color: #2a3a58;
+  }
+
+  .callout-warning {
+    background: #fdf5e6;
+    border-left: 4px solid #c08020;
+    color: #5a4010;
+  }
+
+  .callout-accent {
+    background: var(--accent-pale);
+    border-left: 4px solid var(--accent);
+    color: #4a1818;
+  }
+
+  .callout-dark {
+    background: var(--ink);
+    border-left: 4px solid var(--accent-light);
+    color: #c8b89e;
+    font-style: italic;
+  }
+
+  .callout strong, .callout b {
+    font-weight: 600;
+  }
+
+  /* ─── Tools badge ─── */
+  .tools-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--ink);
+    color: #c8a878;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: .15em;
+    padding: .25rem .7rem;
+    border-radius: 2px;
+    margin-bottom: .5rem;
+    text-transform: uppercase;
+  }
+
+  /* ─── Depth table special styling ─── */
+  .depth-table th:first-child { width: 8em; }
+
+  /* ─── Rubric table ─── */
+  .rubric-table th, .rubric-table td { font-size: .75rem; }
+
+  /* ─── Key concept highlight ─── */
+  .key-concept {
+    display: inline-block;
+    background: var(--accent-pale);
+    color: var(--accent);
+    font-weight: 500;
+    padding: 0 .3rem;
+    border-radius: 2px;
+    font-size: .875em;
+  }
+
+  /* ─── Divider ─── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 3rem 0;
+  }
+
+  /* ─── Footnotes ─── */
+  .footnotes {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--rule);
+    font-size: .8rem;
+    color: var(--ink-muted);
+    font-family: var(--sans);
+  }
+
+  .footnotes h3 {
+    font-size: .85rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--ink-muted);
+    font-family: var(--sans);
+    border: none;
+    padding: 0;
+  }
+
+  .fn-item { margin-bottom: .4rem; line-height: 1.6; }
+  .fn-item sup { color: var(--accent); }
+
+  /* ─── References ─── */
+  .references {
+    margin-top: 2rem;
+  }
+
+  .references h2 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: .4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ref-item {
+    font-size: .825rem;
+    line-height: 1.7;
+    margin-bottom: .5rem;
+    padding-left: 1.5rem;
+    text-indent: -1.5rem;
+    color: var(--ink-light);
+    font-family: var(--sans);
+  }
+
+  /* ─── TOC toggle for mobile ─── */
+  .toc-toggle {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 48px;
+    height: 48px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 200;
+    font-size: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,.3);
+  }
+
+  /* ─── Back to top ─── */
+  .back-top {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-family: var(--sans);
+    font-size: .8rem;
+    color: var(--ink-muted);
+    text-decoration: none;
+    margin-top: 2rem;
+  }
+
+  .back-top:hover { color: var(--accent); }
+
+  /* ─── Progress bar ─── */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    z-index: 1000;
+    transition: width .1s;
+  }
+
+  /* ─── Print ─── */
+  @media print {
+    .toc-sidebar, .progress-bar, .toc-toggle { display: none !important; }
+    .main { margin-left: 0; }
+    .hero { padding: 2rem; }
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 900px) {
+    :root { --sidebar-w: 0px; }
+
+    .toc-sidebar {
+      width: 280px;
+      transform: translateX(-100%);
+      transition: transform .3s ease;
+    }
+
+    .toc-sidebar.open { transform: translateX(0); }
+
+    .main { margin-left: 0; }
+
+    .hero { padding: 3rem 1.5rem; }
+
+    .content { padding: 2.5rem 1.25rem 4rem; }
+
+    .toc-toggle { display: flex; }
+
+    .premise-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ─── TOC Sidebar ─── -->
+<nav class="toc-sidebar" id="tocSidebar" aria-label="目次">
+  <div class="toc-logo">
+    <span class="toc-logo-label">Academic Reading Guide</span>
+    <span class="toc-logo-title">アカデミック・リーディングの<br>作法・技法・用法</span>
+  </div>
+  <div class="toc-nav">
+    <div class="toc-section">前文</div>
+    <a href="#premise">前提と目標</a>
+
+    <div class="toc-section">Ⅰ 原理編</div>
+    <a href="#intro">イントロダクション</a>
+    <a href="#mondai" class="sub">問題意識とは何か</a>
+    <a href="#gakujutsu" class="sub">学術的に読むとは</a>
+    <a href="#konnan" class="sub">読解を妨げる7つの困難</a>
+    <a href="#togu" class="sub">研究として読む</a>
+    <a href="#ronbun">1. 論文を読む</a>
+    <a href="#zasshi" class="sub">学術雑誌のレイヤー</a>
+    <a href="#media" class="sub">特殊なメディアとしての論文</a>
+    <a href="#naze">2. 何のために読むのか</a>
+
+    <div class="toc-section">Ⅱ 実践編</div>
+    <a href="#sakouken">3. 先行研究を構築する</a>
+    <a href="#nani" class="sub">何をどの程度読むのか</a>
+    <a href="#tools1" class="sub">【Tools】読む習慣</a>
+    <a href="#tansaku">4. 探索という研究</a>
+    <a href="#houhou" class="sub">探索の方法</a>
+    <a href="#taishou">5. 対話としての読解</a>
+    <a href="#imi" class="sub">社会科学における読む</a>
+    <a href="#ana" class="sub">先行研究の穴の指摘</a>
+    <a href="#meta" class="sub">メタ理論的前提</a>
+    <a href="#in-you">6. 引用するという営為</a>
+    <a href="#hihan">7. 評価軸と批判の様式</a>
+    <a href="#style" class="sub">批判の様式</a>
+    <a href="#hikaku">8. 比較政治学として</a>
+
+    <div class="toc-section">Ⅲ 応用編</div>
+    <a href="#resume">文献レジュメ</a>
+    <a href="#comment">コメント</a>
+    <a href="#matome">まとめ</a>
+
+    <div class="toc-section">資料</div>
+    <a href="#references">参考文献</a>
+  </div>
+</nav>
+
+<!-- ─── Main ─── -->
+<div class="site-layout">
+  <main class="main" id="top">
+
+    <!-- Hero -->
+    <header class="hero" id="heroArea">
+      <p class="hero-kana">Academic Reading / Graduate School Guide</p>
+      <h1>アカデミック・リーディングの作法・技法・用法<br>
+        <span style="font-size:.6em; font-weight:300; opacity:.7">―学術文献の批判的読解と共生のために―</span>
+      </h1>
+      <div class="hero-meta">
+        <span>✍ 伊﨑直志（総合政策科学研究科 D2）</span>
+        <span>📅 2025年5月</span>
+      </div>
+      <div class="hero-epigraph">
+        <p>本を読むとは、他人を私たちのために使役しておきながら、平然としていることである。いちばん洗練度の高い搾取の仕方だ。</p>
+        <cite>— シオラン『告白と呪詛』</cite>
+      </div>
+      <div class="hero-epigraph" style="margin-top:1rem">
+        <p>これこれこういう本を読んだことがあるかと尋ねられた場合、私は用心して、いつもこう答えます。「いいですか、私は読むのじゃなくて、書くのが仕事なんですよ」。こう言えば、みんな黙って引きさがります。</p>
+        <cite>— エーコ（2010: 364）</cite>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- Premise -->
+      <section class="section" id="premise">
+        <div class="callout callout-accent" style="font-size:.95rem; font-weight:500; margin-bottom:1.5rem">
+          「サーベイとレジュメと（批判的）引用を三位一体として捉えよ」
+        </div>
+
+        <div class="premise-grid">
+          <div class="premise-card">
+            <h4>前提の問題意識</h4>
+            <ul class="body-list">
+              <li>論文の読み方は教わらない。なんとなく雰囲気で読んでいる人が多数。</li>
+              <li>「日本人なら日本語の文章は読めるだろう」といった段階から疑ってかかるべき。</li>
+              <li>学術的な文章を読む際の基本的な語彙力・文法力・構文解析力は意識的に訓練する必要がある。</li>
+              <li>実践的・メゾレベルの考え方が断片的にしか教示されない傾向にある。</li>
+            </ul>
+          </div>
+          <div class="premise-card">
+            <h4>目標</h4>
+            <ul class="body-list">
+              <li>何を読んで書くべきなのか理解する（critical readingとself-critical writingは表裏一体）</li>
+              <li>試行錯誤しながらも研究活動のフローを回せるようになる手がかりとしたい。</li>
+              <li>大学院生の「顕教と密教」：指導教員や当該分野のローカルルールが優先。</li>
+              <li>散発的に行っている「読み」を基礎から問い直す。</li>
+            </ul>
+          </div>
+        </div>
+
+        <p style="font-size:.875rem; color:var(--ink-muted)">
+          <strong>筆者について：</strong>社会科学 ＞ 政治学 ＞ 比較政治学。
+        </p>
+      </section>
+
+      <!-- PART I -->
+      <div class="part-header" data-part="Ⅰ">
+        <span class="part-label">Part I</span>
+        <h2>原理編</h2>
+      </div>
+
+      <!-- Intro -->
+      <section class="section" id="intro">
+        <h2>イントロダクション──なぜ読むことが問われるのか？</h2>
+        <p>読むことは研究を始めるうえで不可欠の入口であり、同時に研究を進め続けるための中核的作業でもある。</p>
+      </section>
+
+      <!-- 問題意識 -->
+      <section class="section" id="mondai">
+        <h2>「問題意識」とは何か──何が悲しくて研究なんかするのか？</h2>
+        <p>なぜ面倒な作業を乗り越えて論文を書こうとするのか＝問題意識（松沢・高嶋2022）、問題意識を捏造する方法を考えるべき（戸田山2022）</p>
+
+        <ul class="body-list">
+          <li><strong>研究の内発的動機・感情的な原点：</strong>直感（直観）や身体感覚に基づく、名状しがたい何か。何らかの違和感、怒り、不思議さ、社会的経験や人生経験に基づくこともある。</li>
+          <li><strong>研究の起点：</strong>どの「問題」への意識や関心なのか？日本語の「問題」の多義性ゆえの曖昧性と誤解</li>
+        </ul>
+
+        <div class="table-wrap">
+          <table>
+            <caption>表1.1　「問題」と問いの類型</caption>
+            <thead>
+              <tr>
+                <th>「問題」種別</th>
+                <th>焦点（なぜそれが問題か？）</th>
+                <th>問いのタイプ</th>
+                <th>研究への応用（例）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>実践的課題 (problem)</td><td>現場で困っている／解決が求められている（改善・改革への意欲）</td><td>How can we solve X?</td><td>政策研究、応用研究、社会工学、当事者研究・参与観察</td></tr>
+              <tr><td>社会的争点 (issue)</td><td>社会的に意見が割れている／意味の対立がある</td><td>Why is X controversial?</td><td>政治理論、メディア分析、倫理学</td></tr>
+              <tr><td>知的問い (question)</td><td>理解・説明が不足している／メカニズムが不明（理論的関心・知的探究心）</td><td>What explains X?</td><td>仮説検証型研究、実証研究</td></tr>
+              <tr><td>理論的矛盾 (puzzle / anomaly)</td><td>既存理論で説明できない／逆説的である</td><td>Why does X defy the theory?</td><td>理論構築、理論批判、逸脱事例分析</td></tr>
+              <tr><td>未踏の未知 (mystery)</td><td>そもそも観察・言語化されていない／新しい現象である</td><td>What is X in the first place?</td><td>解釈的研究、探索的研究、新領域開拓</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <blockquote>
+          「先行研究の穴を探せというアドバイスとは裏腹に、比較研究分野の優れた研究はしばしば、ある出来事やプロセスがなぜ生じたのかという漠然としつつも強い好奇心や、先行研究にみられる明らかに馬鹿馬鹿しい主張への憤りから始まることが多い。社会やそれをめぐる議論に対して、好奇心も直感も憤りもまったく感じないまま研究者を目指しているのであれば、自分はそもそもこの仕事に向いていないのではないかと考えてみるべきだろう」
+          <cite>— Geddes, B. (2010). Paradigms and Sand Castles, p. 29</cite>
+        </blockquote>
+      </section>
+
+      <!-- 学術的に読む -->
+      <section class="section" id="gakujutsu">
+        <h2>学術的に読むとは何か</h2>
+        <p>「学術文献を読む」とは、他者の問いと主張・論証の構造を理解しようと対話を試み、ときに挫折しながらも、それに対する自らの立場・接続・批判を見出す行為である。</p>
+
+        <h3>学術的な読書/読解の二重性</h3>
+        <ul class="body-list">
+          <li><strong>自分の問題意識を定式化するために読む：</strong>他者の知見を参照し、自己の問いを明確化・洗練させる。自分が立つべき位置（どこから何を問うか）を見出す。</li>
+          <li><strong>他者の問題意識を看取するように読む：</strong>論者の問い・構成・論拠の筋道を丁寧にたどる。単なる要約ではなく、問題系に対する射程の理解が必要。</li>
+        </ul>
+        <p>二つの読みは別々の作業ではなく、交互に往復される。この往復運動そのものが研究である。</p>
+
+        <div class="table-wrap">
+          <table>
+            <caption>表1.2　読書とリーディングの差異</caption>
+            <thead>
+              <tr>
+                <th>項目</th>
+                <th>趣味としての読書</th>
+                <th>研究としてのリーディング</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>目的</td><td>楽しみ、知的好奇心の充足、〈教養〉</td><td>問いに答える／構成する、仮説を検証する、理論を鍛える</td></tr>
+              <tr><td>読後の基準</td><td>「読んだ」「面白かった」「ためになった」</td><td>「どの問いに資するか」「どこを批判／継承できるか」</td></tr>
+              <tr><td>読書態度</td><td>受け身・没入型／感情移入型</td><td>批判的・分析的／位置づけ的</td></tr>
+              <tr><td>アウトプットとの接続</td><td>単発的な感想、引用的消費</td><td>論証、仮説、問題提起と接続しうる参照・批判・展開</td></tr>
+              <tr><td>他者との関係</td><td>「読んだ自分」／コレクション化</td><td>「読むべき時に読む」</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 7つの困難 -->
+      <section class="section" id="konnan">
+        <h2>なぜ「読む」ことができないのか？──学術的読解を妨げる7つの困難</h2>
+        <ol class="body-list">
+          <li><strong>語彙・表現の困難</strong>（→第1章）：学術論文は日常言語とは異なる文法によって編まれた「特殊なメディア」。語彙ひとつにも学派的前提・理論的系譜・時代的文脈が込められている。</li>
+          <li><strong>目的意識の欠如</strong>（→第2章）：「とりあえず読む」では学術的読解は成立しない。読みながら「何に使えるか／何を問えるか」を絶えず問い続ける姿勢が必要。</li>
+          <li><strong>情報過多と読書設計の困難</strong>（→第3章）：「読まないもの」を選ぶことが必要とされる。読むことは設計された実践でなければならない。</li>
+          <li><strong>適切な文献にたどり着けない</strong>（→第4章）：良い読書は良い探索から始まる。探索スキルが読解の深度に直結する。</li>
+          <li><strong>読解対象の構造が読めない</strong>（→第5章）：論文には構造がある。各構成要素の役割を理解し、どこにどの議論が置かれているかを把握することが必要。</li>
+          <li><strong>文献の使い方がわからない</strong>（→第6章）：読んで理解した内容を「どう使うか」が最大の壁。引用とは知的な接続の技術であり、論証の部品である。</li>
+          <li><strong>評価・批判の視角がない</strong>（→第7章）：複数の軸で論文を評価する批判的視点が必要。批判とは否定ではなく構成的な応答であり、読解の終点ではなく出発点でもある。</li>
+        </ol>
+      </section>
+
+      <!-- 研究として読む -->
+      <section class="section" id="togu">
+        <h2>研究として「読む」という営み</h2>
+        <p>鍵となるのは、「他人の頭を借りて、それを引き受け、自分の問いとして再編成する」という姿勢である。</p>
+        <p>多くの「読書論」はhow to readやwhat to readに囚われがちだが、研究においては<span class="key-concept">what to read with（どの文献と併せて読むのか）</span>が重要である。</p>
+
+        <blockquote>
+          「読むとは，完全な書物に身をゆだねるという甘美な夢を断念しつつ，不完全な自分の才覚と責任において，不完全な書物たちを結び合わせ突き合わせ読み合わせていくことなのだ」
+          <cite>— 読書猿（2012）</cite>
+        </blockquote>
+
+        <h3>アドラー＆ドーレン（1997）『本を読む本』──読書のレベル</h3>
+        <ul class="body-list">
+          <li><strong>初級読書：</strong>個々の単語・言葉の識別</li>
+          <li><strong>点検読書：</strong>「系統立てて拾い読みする」技術、その本は何について書かれているかを把握</li>
+          <li><strong>分析読書：</strong>①本の構造をつかむ、②内容を解釈する、③批評する</li>
+          <li><strong>シントピカル読書：</strong>「一冊だけではなく、一つの主題について何冊もの本を相互に関連付けて読むこと」</li>
+        </ul>
+
+        <p>サーベイ／レビューにおいて意識されるべきは、当該論文一つひとつの内容を把握するだけでなく、文献同士の関係性、そして文献と自分の問いとの関係性を確認し、整理することである。</p>
+
+        <blockquote>
+          「良い読者が実践するのは、さまざまな書物を横断することなのである。良い読者とは、書物の各々が自分自身の一部をかけもっており、もし書物そのものに足を止めてしまわない賢明さをもち合わせていれば、その自分自身に道を開いてくれるということを知っているのだ」
+          <cite>— バイヤール（2016: 263–4）</cite>
+        </blockquote>
+      </section>
+
+      <hr class="divider">
+
+      <!-- 1. 論文を読む -->
+      <section class="section" id="ronbun">
+        <h2>1.「論文」を読むとはどういうことなのか？</h2>
+
+        <h3>論文とは何か</h3>
+        <ul class="body-list">
+          <li><strong>定義①：</strong>「論文とは（１）与えられた問い、あるいは自分で立てた問いに対して、（２）一つの明確な答えを主張し、（３）その主張を論理的に裏づけるための事実的・理論的な根拠を提示して主張を論証する」こと（戸田山2022: 45）</li>
+          <li><strong>定義②：</strong>「論文とは、アーギュメントを論証する文章」（阿部2024: 27）→アーギュメントは何か、どこに書いてあるか、適切に論証されているか？</li>
+          <li><strong>定義③：</strong>「研究の成果を比較的短い報告として発表するもの」、学術コミュニケーションの一形態（アンダーソン2022: 5）</li>
+        </ul>
+
+        <h3>論文の種類</h3>
+        <ul class="body-list">
+          <li><strong>原著論文（Original Article）：</strong>独自の理論・実証分析・事例研究の成果を報告。</li>
+          <li><strong>総説論文（Review Article）：</strong>特定分野の研究動向・理論系譜の整理。</li>
+          <li><strong>書評論文（Review Essay）：</strong>複数文献、議論を絡めて構成された批判的論考。</li>
+          <li><strong>レター論文（Letter / Research Note）：</strong>限定的分析・速報的な知見・補論。</li>
+          <li><strong>論説（Editorial）：</strong>ある論点やトピックについての見解や問題提起を行う短文。</li>
+          <li><strong>会議論文（Conference Paper）：</strong>学会での議論を目的とした未発表草稿（引用不可の場合が多い）。</li>
+          <li><strong>政策提言論文（Policy Paper）：</strong>実証的調査に基づく政策提案。</li>
+        </ul>
+      </section>
+
+      <!-- 学術雑誌のレイヤー -->
+      <section class="section" id="zasshi">
+        <h2>学術雑誌のレイヤー</h2>
+
+        <ul class="body-list">
+          <li><strong>国際誌：</strong>国際的な学会や出版社が発行。英語中心。査読あり。インパクトファクター（IF）で評価されやすい。採択率が低い。</li>
+          <li><strong>学会誌：</strong>専門学会が発行。分野の専門家による投稿・査読。通常は査読があるが難度は雑誌によって異なる。</li>
+          <li><strong>紀要：</strong>大学・研究機関が発行。比較的自由に投稿可能で、査読がない、あるいは緩やかなことが多い。</li>
+        </ul>
+
+        <h3>査読（peer-review）とは</h3>
+        <p>学術論文や研究成果の質を、同分野の専門家（peer）が匿名で評価・審査する仕組み。</p>
+
+        <div class="table-wrap">
+          <table>
+            <caption>査読結果の種類</caption>
+            <thead>
+              <tr><th>結果</th><th>意味</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Accept</strong></td><td>無修正で掲載</td></tr>
+              <tr><td><strong>Minor revision</strong></td><td>小修正で掲載（文体・文献追加等）</td></tr>
+              <tr><td><strong>Major revision</strong></td><td>大幅修正を要求（理論・分析方法・再分析等）<span style="color:var(--accent); font-weight:600">← Revise and Resubmit!!</span></td></tr>
+              <tr><td><strong>Reject</strong></td><td>掲載不可（内容の欠陥、雑誌の水準と不一致等）</td></tr>
+              <tr><td><strong>Desk Reject</strong></td><td>編集部段階で不採用。査読にすら進まない。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 特殊なメディア -->
+      <section class="section" id="media">
+        <h2>特殊なメディアとしての論文</h2>
+        <p>学術論文は他者との知的対話・合意形成のプロトコルとして存在する、「問いに答える構造」「他者に検証可能なかたちで提示する構造」を備えた特殊なメディアである。そこに書かれた文章は、実際には、ある種の読者──同じ専門的語彙や理論的枠組みを共有した読み手を前提に書かれている。</p>
+
+        <div class="callout callout-warning">
+          <strong>⚠ 読めていない紹介者への注意：</strong>GIGAZINEやナゾロジーなどのSNSに流れる刺激的な見出しには、元論文が「明確に否定している」「使っていない」「慎重な扱いを喚起した」表現が散見される。学術論文を読むリテラシーは相応の訓練を要する。
+        </div>
+
+        <h3>主要辞書・参考文献ツール</h3>
+        <ul class="body-list">
+          <li>JapanKnowledge Lib, Oxford Reference, Oxford Research Encyclopedia of Politics, Stanford Encyclopedia of Philosophy</li>
+          <li>モーリー, J.『アカデミック・フレーズバンク：そのまま使える！構文200・文例1900』講談社</li>
+          <li>福田尚代・西山聖久（2016）『理工系なら必ず知っておきたい 英語論文を読みこなす技術』誠文堂</li>
+        </ul>
+      </section>
+
+      <hr class="divider">
+
+      <!-- 2. 何のために -->
+      <section class="section" id="naze">
+        <h2>2. 何のために読むのか？</h2>
+        <p>先行研究を読むのは、「自らの研究を成立させるため」である。</p>
+
+        <ol class="body-list">
+          <li>既存研究の蓄積と到達点を把握</li>
+          <li>研究のギャップを発見し、自身の研究の位置づけを明確化</li>
+          <li>理論的枠組みや分析概念の獲得</li>
+          <li>方法論の選択と設計の参考</li>
+          <li>研究倫理・再現可能性・透明性の確保</li>
+          <li>研究の説得力と正当性の補強</li>
+        </ol>
+
+        <div class="table-wrap">
+          <table>
+            <caption>表2.1　類似作業の整理</caption>
+            <thead>
+              <tr>
+                <th>観点</th>
+                <th>サーベイ（Survey）</th>
+                <th>文献レビュー（Literature Review）</th>
+                <th>システマティック・レビュー（Systematic Review）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>目的</td><td>特定分野やテーマの主要研究を広く紹介</td><td>研究テーマにおける知的蓄積・到達点・ギャップを把握し、自身の研究を位置づける</td><td>明確な問いに対して、文献を網羅的・再現可能に収集・評価し、エビデンスを統合</td></tr>
+              <tr><td>網羅性</td><td>必ずしも網羅的ではない（代表的研究を選定）</td><td>概ね関連研究を網羅するが、選定基準は明示されないことが多い</td><td>明確な選定基準に基づいて包括的に収集・評価</td></tr>
+              <tr><td>方法論の明示</td><td>あまり重視されない（経験と判断に依存）</td><td>暗黙的な場合が多い</td><td>手続きが厳格：検索語・除外基準・レビューの手順を明記</td></tr>
+              <tr><td>場面</td><td>入門者向け、授業や解説的資料で多用</td><td>博論・論文・申請書における先行研究整理</td><td>医学・教育・政策評価など実証的蓄積が豊富な分野</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <blockquote>
+          「「書き手」としての読み方を意識的に身につけるべきである。「読み手」として、読むこと自体の楽しさだけに浸っていてはいけない。その文献を読むことが、自身の研究にいかなる意味を持つのかを常に意識するべきである」
+          <cite>— 曽我（2014a）</cite>
+        </blockquote>
+      </section>
+
+      <!-- PART II -->
+      <div class="part-header" data-part="Ⅱ">
+        <span class="part-label">Part II</span>
+        <h2>実践編</h2>
+      </div>
+
+      <!-- 3. 先行研究 -->
+      <section class="section" id="sakouken">
+        <h2>3. 構築物としての「先行研究」──何をどの程度読むのか？</h2>
+
+        <div class="callout callout-accent">
+          <p>先行研究とは「探す」ものではなく<strong>「作る」</strong>ものである</p>
+          <ul class="body-list" style="margin-top:.5rem">
+            <li>よくある誤解：①与えられ、②一覧から探して、③まとめて、④並べること</li>
+            <li>適切な理解：①問いを起点に定め、②読むべき文献を取捨選択し、③関係づけ、④再構成・再配置すること</li>
+          </ul>
+        </div>
+
+        <h3>「読んだほうがいい」の複層性</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>レイヤー</th><th>文献</th><th>目的</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>研究上の必要性</td><td>自分の問いに直接関係する文献</td><td>論証・方法・理論の補強</td></tr>
+              <tr><td>教育上の必要性</td><td>専門の知識体系を構成する古典、必読文献</td><td>論点の地盤理解・教育的訓練</td></tr>
+              <tr><td>他者との対話可能性</td><td>他の研究者が読んでいる文献</td><td>研究コミュニティとの接続・共通の参照枠をもつため</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-warning">
+          <strong>Be a player, not a prayer!</strong><br>
+          学問の消費者ではなく、実践者として「先行研究」を作っていくこと。「オタク」（あるいは「崇拝者」）になってはいけない。
+        </div>
+
+        <h3>何が「先行研究」になるのか？</h3>
+        <p>①問いの接続、②対象とする国／時代／アクター、③分析レベル、④アプローチ・手法、⑤概念・理論の接続、⑥史資料（データセット）のいずれか、あるいは複数の一致と共有があれば先行研究たりうる。</p>
+      </section>
+
+      <!-- 何をどの程度 -->
+      <section class="section" id="nani">
+        <h2>何をどの程度読むのか？</h2>
+        <blockquote>
+          「先行研究を読むにあたって考えるべき第1のポイントは、何をどの程度読むのか、裏返していうならば、何を読まないのかを判断することである。何よりも避けるべきは、読むに値しない文献に時間と労力を費やしてしまうことである」
+          <cite>— 曽我（2014a）</cite>
+        </blockquote>
+
+        <h3>読むべき文献の種類</h3>
+        <ul class="body-list">
+          <li><strong>概説書、テキスト、新書：</strong>参考文献やリーディングリストから目星をつける。基本的に引用に値する直接の先行研究にはできない。</li>
+          <li><strong>書籍＝単行本、モノグラフ：</strong>"なぜモノグラフを読むべきか？"→体系性、網羅性、文脈や背景の把握</li>
+          <li><strong>博論、博論本：</strong>プロジェクトの規模感、構成の手本となる。著者が一番書きたいこと・研究上の核が書いてある。</li>
+          <li><strong>学術論文：</strong>できるだけ査読付きジャーナル論文が望ましい。IFは基本的に気にせずよい（「自然科学の傲慢、人文・社会科学の怠慢」の産物）。</li>
+          <li><strong>名の知れた研究者だけでなく、意識的に若手研究者の論文を読む：</strong>当面のあいだ目指すべき水準・「相場観」を認識しておくことが重要。</li>
+          <li><strong>「古典」とされる文献：</strong>現在への批判的再接続、思考と言語の生成条件を探る等の意義がある。</li>
+        </ul>
+
+        <h3>「古典」を読む意義、目的</h3>
+        <div class="table-wrap">
+          <table>
+            <caption>なぜ古典は読まれるのか？</caption>
+            <thead>
+              <tr><th>類型</th><th>よくある答え</th><th>潜在的なリスク</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>普遍的真理型</td><td>「古典は人間・社会の普遍的真理を語っているから」</td><td>脱文脈化読解／古典の神格化</td></tr>
+              <tr><td>精神修養型</td><td>「読むことで教養が深まり、人間性が磨かれるから」</td><td>古典の内在的価値の押しつけ／規範化</td></tr>
+              <tr><td>知の源流型</td><td>「現代の政治概念・理論の出発点があるから」</td><td>過度な直線的発展史観</td></tr>
+              <tr><td>巨人型</td><td>「ホッブズもロックも読んでおかないと政治学を語れないから」</td><td>単なる権威性の再生産に終始</td></tr>
+              <tr><td>問いの源型</td><td>「古典には今では問われない問いがあるから」</td><td>現代との接続の強制／アナクロニズム</td></tr>
+              <tr><td>再解釈可能性型</td><td>「読むたびに違う意味をもつから」</td><td>解釈が過度に主観的・恣意的になる恐れ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-dark">
+          古典とは「逐条ごとに解釈がせめぎあう壮絶な戦場」であり、その「解釈の違いを面白がること」自体が、古典と付き合う醍醐味である。
+        </div>
+      </section>
+
+      <!-- Tools 読む習慣 -->
+      <section class="section" id="tools1">
+        <h2><span class="tools-badge">🔧 Tools</span> 論文を読む習慣──パッシブ・システムを構築する</h2>
+
+        <ul class="body-list">
+          <li><strong>SNS（X/旧Twitter）：</strong>研究用アカウントを作成。トレンド欄が邪魔→外国都市に設定。</li>
+          <li><strong>Bluesky Social：</strong>研究者やジャーナルのXからの乗り換えが相次いでいる。</li>
+          <li><strong>RSS：</strong>主要ジャーナルの更新情報通知。Slack連携可能。</li>
+          <li><strong>メールアラート：</strong>学術プラットフォーム上で参照する主要ジャーナルの通知を設定。</li>
+          <li><strong>The Observatory of International Research：</strong>トレンド・よく読まれている論文を分野ごとにランキング化。</li>
+          <li><strong>Paper Picnic 🧺: Political Science：</strong>新着公刊論文をジャーナルごとにインデックス化。</li>
+        </ul>
+
+        <div class="callout callout-warning">
+          <strong>⚠ 重要：</strong>システムを構築することは必ずしも重要ではない。体系が把握できないままに各論だけ追うと袋小路に迷い込む。FOMO（取り残されることへの恐れ）に注意。自分のトラックを地道に走っていくことのほうが重要である。
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <caption>表3.1　ジャーナルの公開場所の種別</caption>
+            <thead>
+              <tr><th>種別</th><th>内容</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>電子ジャーナル・プラットフォーム</td><td>学術雑誌・書籍を有料（購読制）で提供する出版社・配信基盤（例：SAGE, Wiley, Elsevier, Cambridge）</td></tr>
+              <tr><td>全文データベース</td><td>学術雑誌やモノグラフのアーカイブ（例：ProQuest, JSTOR, Project MUSE）</td></tr>
+              <tr><td>学術SNS／自己アーカイブ共有</td><td>著者自身が研究成果をアップロード・共有する場（例：ResearchGate, Academia.edu）</td></tr>
+              <tr><td>プレプリントサーバ</td><td>査読前の論文を無料で公開（例：arXiv, SSRN, SocArXiv）</td></tr>
+              <tr><td>大学機関リポジトリ</td><td>所属研究者の論文・博士論文などを無料で公開</td></tr>
+              <tr><td>OAプラットフォーム</td><td>世界中のOAジャーナルを横断検索（例：DOAJ, OpenEdition, HAL）</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- 4. 探索 -->
+      <section class="section" id="tansaku">
+        <h2>4. 探索という研究──どこで・どう探せばいいのか？</h2>
+      </section>
+
+      <section class="section" id="houhou">
+        <h2>探索の方法</h2>
+
+        <h3>「芋づる方式」「網羅方式」「検索方式」（曽我2014a）</h3>
+        <blockquote>
+          「基本的な原則として、日常的には芋づる方式を中心とすべきである。検索方式は、自分が書く論文のテーマが具体的に絞られてきてから行うほうがよい。網羅方式は、学術研究を職業とする（しようとする）場合にのみ行えばよいだろう」
+        </blockquote>
+
+        <ul class="body-list">
+          <li><strong>芋づる方式：</strong>参考文献から拾っていく方法（引用のネットワークで探す）。<br>
+            <span class="tools-badge" style="margin-top:.4rem">🔧 Tools</span> ResearchRabbit, Connected Papers</li>
+          <li><strong>網羅方式：</strong>注目する研究者が書いたものや特定の媒体に掲載されているものについて、ともかく目を通す方法。</li>
+          <li><strong>検索方式：</strong>データベースに検索語を入れる方法。</li>
+        </ul>
+
+        <h3>ジャーナルのTierイメージ（比較政治学関連）</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Tier</th><th>特徴</th><th>例</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Tier 1</strong></td><td>トップ誌（国際的権威）。高インパクト、激高競争率。</td><td>APSR, AJPS, JOP, BJPolS, World Politics, Political Analysis</td></tr>
+              <tr><td><strong>Tier 2</strong></td><td>分野内トップ（特化領域で国際水準）。専門領域に強み。</td><td>Comparative Political Studies, IO, EJPR, Perspectives on Politics, Political Theory</td></tr>
+              <tr><td><strong>Tier 3</strong></td><td>メジャー・準トップ。地域系・応用志向。</td><td>Party Politics, West European Politics, Politics & Society, Japanese Journal of Political Science</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>【学術論文の新旧に伴う長短】</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>観点</th><th>古い論文の長短</th><th>新しい論文の長短</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>理論的基盤</td><td>（＋）学問の土台となる理論の出発点を理解できる<br>（－）現在のデータや社会状況と乖離している可能性</td><td>（＋）最新の理論的動向がつかめる<br>（－）定着しておらず、理論的再評価が必要な場合あり</td></tr>
+              <tr><td>影響力</td><td>（＋）引用され続けており、信頼性・影響力が高い<br>（－）過去に否定された可能性</td><td>（＋）最近の議論の把握がしやすい<br>（－）引用数が少ないと評価が定まっていないケース多数</td></tr>
+              <tr><td>方法論・データ</td><td>（＋）クラシックな方法論で理解しやすい<br>（－）データの古さ</td><td>（＋）最新のデータ・手法の活用<br>（－）手法が過度に複雑</td></tr>
+              <tr><td>自分の研究への応用</td><td>（＋）理論や概念を再構成する際の素材に<br>（－）そのまま援用すると時代遅れとみなされるおそれ</td><td>（＋）最新の研究動向と接続<br>（－）研究動向に乗るだけの追従的研究になりがち</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-style:italic; color:var(--ink-muted)">古い論文で問いを作り、新しい論文で問いを更新する。</p>
+
+        <h3><span class="tools-badge">🔧 Tools</span> 主要検索ツール</h3>
+        <ul class="body-list">
+          <li><strong>Google Scholar：</strong>論文検索サイト。アラート機能で新規公開情報を通知。</li>
+          <li><strong>Unpaywall：</strong>論文のオープンアクセス版を表示させるブラウザ拡張機能。</li>
+          <li><strong>J-STAGE：</strong>国立研究開発法人JSTが運営。JstagePDFRenamerで自動ファイル名付けダウンロード。</li>
+          <li><strong>CiNii Research：</strong>国立情報学研究所が運営。論文、図書・雑誌や博士論文等を検索。</li>
+        </ul>
+
+        <div class="callout callout-info">
+          <strong>高度な検索のヒント：</strong>検索エンジンを変えてみる（Google→Yahoo!→DuckDuckGo）。検索演算子の利用（ドメイン制約、期間指定、AND検索等）。インターネットにあるのはごく一部であり、そのごく一部も玉石混交である。AIによる「Deep Research」も登場したが、インターネット上になく把握されない文献はないものとされ縮小再生産に終わるリスクがある。
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- 5. 対話としての読解 -->
+      <section class="section" id="taishou">
+        <h2>5. 対話としての「読解」──どこを・どう読むか？</h2>
+
+        <h3>文章レベルで注意すべきこと</h3>
+        <ul class="body-list">
+          <li><strong>目次：</strong>本の目的・構造を把握</li>
+          <li><strong>図表：</strong>なぜこの図が必要か。縦軸・横軸に何を置いているか。本文と図表の関係は明示されているか。</li>
+          <li><strong>注：</strong>①本文の根拠提示、②補足・余談・知的「遊び」の空間。注からは著者の系譜、周辺的関心、専門性の幅が垣間見える。</li>
+          <li><strong>索引：</strong>どの概念・地域・理論が索引化され、どのページに現れるか。補助線としての構造が浮かび上がるか。</li>
+        </ul>
+
+        <h3>構成部品（章・節）の機能を読む</h3>
+        <ul class="body-list">
+          <li><strong>導入：</strong>読者にとってなぜ重要かが明示されているか。主張と展開の道筋が示されているか。</li>
+          <li><strong>先行研究：</strong>単なる紹介でなく、著者の立場（否定、継承、補足、発展）の関係性が論じられているか。</li>
+          <li><strong>結論：</strong>議論の要約・限界の自覚・今後の課題の3点が明確に書かれているか。良い結論は「次の問い」への橋渡しとして機能している。</li>
+        </ul>
+
+        <div class="table-wrap">
+          <table class="depth-table">
+            <caption>表5.1　読みの深度</caption>
+            <thead>
+              <tr><th>深度</th><th>作業内容</th><th>段階目安</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>表層読み</strong></td><td>タイトル・概要・キーワード・結論のみを読む</td><td>文献の初期選別、関連度のスクリーニング</td></tr>
+              <tr><td><strong>構造読み</strong></td><td>問題設定・理論枠組み・方法・結論をざっと通読。問いは何か、どんな主張をしているか、それをどう論証しているか</td><td>分野の主潮流を把握／研究マッピング</td></tr>
+              <tr><td><strong>論理読み</strong></td><td>仮説の立て方、因果構造、使用データ、論証の飛躍や前提を精査。結論は本当に論証によって導かれているか？</td><td>批判的レビュー、理論の弱点把握</td></tr>
+              <tr><td><strong>対話読み</strong></td><td>自身の問いや立場から批判的に応答。他の研究とどう違うか・似ているか？自分の問いとどこで接続しうるか？</td><td>研究計画への統合、理論構築、仮説設定</td></tr>
+              <tr><td><strong>精読・再構成読み</strong></td><td>論文そのものを論理単位で分解・再構成し、この論文を使うなら、どのように使えるか？</td><td>理論的再定式化、先行研究の再構築</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 社会科学における読む -->
+      <section class="section" id="imi">
+        <h2>社会科学における「読む」とは何か</h2>
+        <p>社会科学における「読む」とは、問いの構造・理論の背景・議論の相互関係を理解し、それを自分の研究のなかで「再利用可能な資源」として位置づけることである。</p>
+
+        <h3>文献を「読めた」とは──6要素</h3>
+        <ul class="body-list">
+          <li><strong>問い：</strong>何を、なぜ問うているか——何の会話に混ざるのか？</li>
+          <li><strong>主張：</strong>論文の中核となる主命題（テーゼ、アーギュメント）。著者が言いたい「一文で言えばこうなる」という命題は何か？</li>
+          <li><strong>論証：</strong>いかなる理論と方法で主張を支えているか。著者はどの理論（枠組み）に依拠しているか？</li>
+          <li><strong>系譜：</strong>先行研究や他理論との関係（批判・継承）。その論文は学術的対話のなかでどこに位置づけられるか？</li>
+          <li><strong>文脈：</strong>分析対象の制度・歴史・社会背景。論文が分析している社会・国・制度の背景を押さえているか？</li>
+          <li><strong>接続：</strong>自分の問いや研究テーマとのつながり（→引用）。この文献は、自分の問いにどう使えるか？</li>
+        </ul>
+
+        <div class="table-wrap">
+          <table>
+            <caption>表5.1　人文学と社会科学における「読解」の方法論的差異</caption>
+            <thead>
+              <tr><th>観点</th><th>人文学（文芸批評・哲学・歴史学など）</th><th>社会科学（政治学・社会学・経済学など）</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>主たる目的</td><td>意味の解釈・意味世界の探究</td><td>因果関係・一般化・理論的説明の構築</td></tr>
+              <tr><td>読解の焦点</td><td>言語の多義性・象徴性・文脈性</td><td>言説の構造・論理性・再現可能性</td></tr>
+              <tr><td>行間の扱い</td><td>豊かに読む＝含意・比喩・沈黙・暗示の意味生成に注目</td><td>排除・補完＝論理の省略部を明示的に再構成する対象</td></tr>
+              <tr><td>検証の基準</td><td>説得力・解釈の精緻さ・美的整合性</td><td>妥当性・反証可能性・論理的一貫性</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 先行研究の穴 -->
+      <section class="section" id="ana">
+        <h2>先行研究の穴の指摘＝貢献の類型</h2>
+        <blockquote>
+          「言い換えるならば、研究は大穴を狙うものではない。ニッチ（隙間）を狙うものなのである。そして隙間は自ら見出すものなのである」
+          <cite>— 曽我（2015）</cite>
+        </blockquote>
+
+        <p>アルヴェッソン＆サンドバーグ（2023）による貢献の類型：</p>
+        <ul class="body-list">
+          <li><strong>混乱（競合する説明）型：</strong>先行文献に見られる混乱を整理し、それについて説明を行う。</li>
+          <li><strong>軽視・無視型：</strong>先行研究で軽視ないし無視されている点について明らかにする。①見落とされていた研究領域、②十分に研究されてこなかった領域、③実証データによる裏づけの不足、④特定の側面に関する検討の不足。</li>
+          <li><strong>適用（先行文献の拡張・補完）型：</strong>先行文献の検討を通して理論や概念の新しい適用可能性を明らかにする。</li>
+        </ul>
+      </section>
+
+      <!-- メタ理論的前提 -->
+      <section class="section" id="meta">
+        <h2>より深く文献に潜る──メタ理論的前提</h2>
+
+        <ul class="body-list">
+          <li><strong>メタ理論（Metatheory）：</strong>どんな世界観・前提に基づくか？価値論、存在論的立場、認識論的立場を読む。</li>
+          <li><strong>暗黙の前提（Unexamined Assumptions）：</strong>なぜそれが「当然」とされているか？学術的・政治的な背景、制度的文脈を照射する。</li>
+        </ul>
+
+        <div class="callout callout-accent">
+          <strong>「問題化（Problematization）」（アルヴェッソン・サンドバーグ2024）</strong><br>
+          既存理論の発想や視点の根底にある前提に異議を唱え挑戦すること。氷山モデルを意識し、暗黙の前提・価値観・パラダイムを問え＝刺激的なリサーチ・クエスション。
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- 6. 引用 -->
+      <section class="section" id="in-you">
+        <h2>6.「引用する」という営為──使うことを想定して読む</h2>
+
+        <blockquote>
+          「多くの初学者は文章を丁寧に通読して、自分が気になった鋭い洞察をふくむパッセージを好意的に引用したり、あるいは瑣末なミスを批判したりすることが引用だと考えている。それらは間違っているわけではないが、論文の仕事はあくまでも先行研究のアーギュメントを正確に把握したうえで、みずからの新しいアーギュメントによってアカデミックな会話を一歩さきに進めることだという真の目的を見失ってはいけない」
+          <cite>— 阿部（2024: 96）</cite>
+        </blockquote>
+
+        <div class="table-wrap">
+          <table>
+            <caption>表6.1　引用の機能と目的</caption>
+            <thead>
+              <tr><th>挿入場所</th><th>機能種別</th><th>目的</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>序論</td><td>背景説明、定義、先行研究のレビュー</td><td>前提となる知識を読者と共有する</td></tr>
+              <tr><td>序論</td><td>〈逆接〉問題提起</td><td>いかなる問題を解決する論文かを明示する</td></tr>
+              <tr><td>本論・論証部</td><td>自説に類するもの</td><td>自説を援護してもらう</td></tr>
+              <tr><td>本論・論証部</td><td>自説に対するもの</td><td>論破することにより自説を強靭にする</td></tr>
+              <tr><td>その他適宜</td><td>自説にまつわるもの</td><td>自分が手がけていない部分を補完してもらう等</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-info">
+          <strong>「引用は政治的なものである」（politics of citation / "citational politics"）</strong><br>
+          学術的な権威の再生産行為、誰を正当／正統とみなし誰を周縁化・等閑視するか？メジャーな手堅い引用だけをしていても新規性や目新しさは出ない。掘り起こし・再発見・フックアップ的機能＝研究の楽しさ・妙味の一つ！
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- 7. 評価軸と批判 -->
+      <section class="section" id="hihan">
+        <h2>7. 評価軸と批判の様式──論文をどう読むか／どう位置づけるか？</h2>
+
+        <div class="table-wrap">
+          <table>
+            <caption>表7.1　評価の観点</caption>
+            <thead>
+              <tr><th>評価観点</th><th>チェック項目</th><th>批判例・コメント</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>着眼点の新鮮さ</td><td>観点や問いに独創性があるか？</td><td>よくある問い／手垢がついたテーマ</td></tr>
+              <tr><td>理論的貢献</td><td>既存理論の再構成・精緻化を行っているか？</td><td>理論への付加価値がない</td></tr>
+              <tr><td>実証的貢献</td><td>新しいデータや事例を分析しているか？</td><td>再分析に留まっている／限界的</td></tr>
+              <tr><td>社会的意義</td><td>現実の政治・社会への応用可能性があるか？</td><td>現実との接続が弱い／抽象的すぎる</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>面白さと重要性</h3>
+        <ul class="body-list">
+          <li>面白くて重要な研究 ＞ 重要だが面白くはない研究、面白くはあるが重要ではない研究 ＞ 面白くも重要でもない研究</li>
+          <li><strong>面白さ：</strong>書き手の力量（思考の切れ味、構成の巧みさ、概念の創造・再定義）× 読み手の感度（問いへの敏感さ、文脈とズレの把握）の函数</li>
+          <li><strong>重要性：</strong>問われている問題のスケール × 現実への射程 × 学問的系譜での位置づけ</li>
+        </ul>
+
+        <div class="table-wrap">
+          <table class="rubric-table">
+            <caption>【学術的面白さ・重要性に関するルーブリック（5段階評価）】</caption>
+            <thead>
+              <tr><th>評価観点</th><th>5（非常に優れている）</th><th>3（標準的）</th><th>1（不十分）</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1. 意外性・独創性</td><td>常識や理論を覆す新しい視点を提示しており、印象的かつ挑発的</td><td>一部に目新しさがあるが、基本的には既存研究に沿っている</td><td>独創性がなく、既存の模倣に近い</td></tr>
+              <tr><td>2. 理論的貢献</td><td>既存理論を再構築・拡張しており、理論史に明確な位置を占めうる</td><td>理論的枠組みを適切に用いている</td><td>理論枠組みが欠如しているか誤用されている</td></tr>
+              <tr><td>3. 実証的貢献</td><td>新たなデータ・事例・手法で実証研究を革新している</td><td>妥当な実証研究である</td><td>データや根拠がなく、論証不能</td></tr>
+              <tr><td>4. 社会的・規範的意義</td><td>現代社会の緊急課題に理論的洞察を与えている</td><td>社会的文脈への接続はあるが弱い</td><td>重要性や意義が読み取れない</td></tr>
+              <tr><td>5. 研究史的意義</td><td>学界の理論的争点や枠組みに積極的に介入しうる</td><td>既存研究の延長線上で議論している</td><td>学術的議論との接点が皆無</td></tr>
+              <tr><td>6. 一般化可能性</td><td>理論的主張や結果が幅広い地域・分野に応用可能</td><td>特定の事例に限定されるが分析は妥当</td><td>事例に依存しすぎて普遍性がない</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 批判の様式 -->
+      <section class="section" id="style">
+        <h2>批判の様式</h2>
+        <p>学術的な批判とは、既存の理論／議論／前提／方法に対して、その成立条件／含意／限界／見落とし／隠された前提を問い直し、代替的な視座や構成の可能性を提起する知的行為である。</p>
+
+        <div class="table-wrap">
+          <table>
+            <caption>批判のレベル（Graham 2008）</caption>
+            <thead>
+              <tr><th>レベル</th><th>説明</th><th>例</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>中心点の反駁</strong></td><td>相手の主張の中心点を指摘し、それが間違っている理由を論理的に説明する</td><td>「著者の主張はXであるようだ。しかし、次の理由からこれは誤りである…」</td></tr>
+              <tr><td><strong>反駁</strong></td><td>相手の発言の誤りを具体的に指摘し、引用を用いて論拠を示す</td><td>「著者は〇〇と言っているが、実際には△△である（証拠付き）」</td></tr>
+              <tr><td><strong>反論</strong></td><td>もともとの議論に対し、論理や証拠を用いて反論を行う</td><td>「その意見には賛成できない。なぜなら…」</td></tr>
+              <tr><td><strong>否定</strong></td><td>具体的な証拠なしに、単に反対意見を述べる</td><td>「それは違う！」</td></tr>
+              <tr><td><strong>語調への反応</strong></td><td>議論の内容ではなく、相手の語調や書き方に反応する</td><td>「この著者の話し方は軽率すぎる！」</td></tr>
+              <tr><td><strong>人格攻撃</strong></td><td>議論ではなく、相手個人を攻撃する</td><td>「彼は政治家だから、どうせこんなことを言うに決まっている！」</td></tr>
+              <tr><td><strong>罵倒</strong></td><td>侮辱的な言葉を使い、相手を否定するだけで議論の内容に触れない</td><td>「バカか！」</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-dark">
+          批判するならば"命懸けで"批判せよ！<br>
+          批判とは「否定」ではなく「関係の構築」であるべきである。理解のない批判は、単なる拒否・無視・再生産にすぎない。
+        </div>
+
+        <h3>読む際の心がけ</h3>
+        <ul class="body-list">
+          <li><strong>思いやり原理（principle of charity）：</strong>著者は筋の通った話をしようとしているはずだということを前提に、読み手がその意図をくみ取りながら文献を理解しようとする態度。</li>
+          <li><strong>協調原理（principle of cooperation）：</strong>著者はわかっているが敢えて削ぎ落している可能性を念頭に置く。</li>
+        </ul>
+
+        <h3>量的研究との付き合い方</h3>
+        <div class="callout callout-info">
+          統計・計量手法が分からなくても、批判的に読むことは可能だし、そうすべきである。<br>
+          ①「そのボックスに入れる素材が適切なのかどうか」②出てきたモノをどう解釈するか。<br>
+          <em>"Garbage in, garbage out"</em> (GIGO) を意識する。
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- 8. 比較政治学 -->
+      <section class="section" id="hikaku">
+        <h2>8. 比較政治学として批判的レビューを行うこと──Poli-sci化と地域研究のはざまで</h2>
+
+        <ul class="body-list">
+          <li><strong>不一致を前提にする：</strong>対象も問いも理論も方法も「ばらばら」である前提のもとに、何が接続可能か／比較可能か／翻訳可能かを検討する。</li>
+          <li><strong>理論的多元主義と批判的接続：</strong>合理主義・構造主義・文化主義といった諸立場を理解し、どのような問いにおいて翻訳・応用できるかを模索する。</li>
+          <li><strong>概念の相対化と再定義：</strong>"State"や"Democracy"といった比較概念は、時代や地域ごとに異なる文脈を持つ。概念の伸縮性や構造的比較可能性を吟味する。</li>
+        </ul>
+
+        <h3>文献批判の観点──A Sartorian Perspective</h3>
+        <blockquote>
+          「数える前に考えろ。考えるときには論理を使え。<em>think before counting; and, also, use logic in thinking</em>」
+          <cite>— Sartori (2004: 786)</cite>
+        </blockquote>
+
+        <ul class="body-list">
+          <li><strong>概念形成の厳密性：</strong>「抽象化の階梯」は意識されているか？概念の適用範囲（extension）と意味内容（intension）のバランスは適切か？</li>
+          <li><strong>事例選択と比較の論理：</strong>Most Similar / Most Different Systems Designのいずれかに準拠しているか？</li>
+          <li><strong>演繹と帰納のバランス：</strong>帰納的に導かれた「発見」であれ、理論的意味づけと反証可能性がなければ逸話的記述にとどまる。</li>
+          <li><strong>言語的・論理的精密さ：</strong>概念の使用が論理的に整合し、反対語や分類関係が明示されているか？</li>
+        </ul>
+      </section>
+
+      <!-- PART III -->
+      <div class="part-header" data-part="Ⅲ">
+        <span class="part-label">Part III</span>
+        <h2>応用編</h2>
+      </div>
+
+      <!-- レジュメ -->
+      <section class="section" id="resume">
+        <h2>文献レジュメ</h2>
+        <p>レジュメとは、単なる「要約」ではなく、理路を読み込み理解したうえで、「使うこと」を前提に読み・記す文書。</p>
+
+        <h3>レジュメに含めるべき要素</h3>
+        <ul class="body-list">
+          <li><strong>日付：</strong>いつ読んだか？</li>
+          <li><strong>動機：</strong>なぜ読もうと思ったのか？</li>
+          <li><strong>基本情報：</strong>著者、タイトル、年、出典（後で引用可能に）</li>
+          <li><strong>問い（RQ）：</strong>著者が何を問おうとしているか</li>
+          <li><strong>主張／アーギュメント：</strong>中心的主張と論理の骨格、原文引用＋要約（p.xx を明記）</li>
+          <li><strong>方法・資料：</strong>使用している理論・手法・データ</li>
+          <li><strong>自分との関係（使い道）：</strong>何のreferenceとして使えるか？自分の問いとどう接続できるか？</li>
+          <li><strong>批判・引用・参照の可能性</strong></li>
+          <li><strong>コメント：</strong>評価・気づき</li>
+        </ul>
+
+        <h3>引用の技法</h3>
+        <ul class="body-list">
+          <li><strong>一文：</strong>「佐藤（2024）は、○○の変化を□□の視点から再定義した。」</li>
+          <li><strong>二文：</strong>「従来の△△観は、○○に依拠していた。だが佐藤は、□□という観点から再解釈を試みている。」</li>
+          <li><strong>一パラグラフ：</strong>背景→問題意識→主張→意義</li>
+        </ul>
+
+        <div class="callout callout-dark">
+          Tier: 読書メモ ＜ レジュメ ＜ 書評論文 ＜ 研究ノート ＜ 論説論文の連続体として捉える。<br>
+          レジュメは「読んだこと」の記録ではなく、「これから使う」ための準備である。
+        </div>
+      </section>
+
+      <!-- コメント -->
+      <section class="section" id="comment">
+        <h2>コメント</h2>
+        <p>コメントとは、「その場に自分が居合わせた知的責任を果たすこと」である。批判ではなくても、「私はこのように受け取った／読んだ」を共有するだけで交差点が生まれる。</p>
+
+        <div class="table-wrap">
+          <table>
+            <caption>【学術的疑問・コメントの Tier】</caption>
+            <thead>
+              <tr><th>種類</th><th>主な目的</th><th>例</th><th>補足</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>共感・接続型</td><td>自身の経験・研究と結びつける</td><td>「自分の研究でも似た課題があり、大変参考になりました」</td><td>共感と接続も立派な貢献。但し節度を要する。</td></tr>
+              <tr><td>確認型疑問</td><td>論理・用語・記述の理解を深める</td><td>「XX頁で言っている『○○』は、どう定義されていますか？」</td><td>「理解していない」ことを正直に訊くのは最も誠実な知的態度。</td></tr>
+              <tr><td>補足・紹介型</td><td>射程を広げる／文献や関連議論の紹介</td><td>「この議論は△△の議論と通じると思いました」</td><td>相手に新たな視点を提供する。</td></tr>
+              <tr><td>応答要求型</td><td>提示された論点へのさらなる掘り下げを促す</td><td>「この場合、○○のケースではどうなりますか？」</td><td>外的妥当性への問い。</td></tr>
+              <tr><td>内在的批判</td><td>論理・問い・方法の整合性を問う</td><td>「この問いにこの方法で答えるには少し無理があるように思いました」</td><td>前提を共有した上で、"構造のズレ"を指摘する知的精度が問われる。</td></tr>
+              <tr><td>外在的批判</td><td>前提・枠組みそのものを問い直す</td><td>「そもそもこの問い立て自体が［ある特定の前提］に依存していませんか？」</td><td>理論枠、視点、語り口の政治性を問う。高度な問い。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- まとめ -->
+      <section class="section" id="matome">
+        <h2>まとめ──アカデミックな態度</h2>
+
+        <div class="callout callout-accent" style="font-size:1rem;">
+          「読めた」ことを疑え、学術文献に読了は無い。「本当に読めているのか？」は、実際に書く・使うことでしか明確にならない。
+        </div>
+
+        <ul class="body-list">
+          <li><strong>アカデミックな営みは、他人を殴るための棍棒や、自己の卓越性を誇示するための道具ではない。</strong>礼賛、卑下、気後れ、侮蔑のいずれも「私はあなたとは違います」という単なるお手軽な差異化の演出にすぎない。学問における適度な態度とは、「私はあなたとは違う」と切り離すことではなく、「あなたの論理を、私はどこまで歩けるか」を問うことである。</li>
+          <li><strong>書くことと読むことの連関と連鎖：</strong>書けるというのは読めるということ、書けないというのは読めていない（質と量）ということ。</li>
+          <li><strong>知的コミュニティにおける責任：</strong>論文を書くことだけでなく、査読すること・読む責任を引き受けることを考える必要がある。読めなければ「正しく批判し、正しく支援する」ことができない。</li>
+        </ul>
+
+        <div class="callout callout-dark" style="margin-top:2rem; font-size:1.1rem; text-align:center; letter-spacing:.1em;">
+          <em>Chance, Luck, and Stubbornness!</em>
+          <br><span style="font-size:.8rem; color:#8a7868">— Sartori (2009)</span>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- References -->
+      <section class="references" id="references">
+        <h2>参考文献</h2>
+        <p style="font-size:.8rem; color:var(--ink-muted); margin-bottom:1rem">※URLは全て2025年5月16日最終閲覧。</p>
+
+        <div class="ref-item">Almond, G. A., and Genco, S. J. (1977). Clouds, Clocks, and the study of Politics. <em>World Politics</em>, 29(4), 489–522.</div>
+        <div class="ref-item">Davis, M. S. (1971). That's Interesting! Towards a Phenomenology of Sociology and a Sociology of Phenomenology. <em>Philosophy of the Social Sciences</em>, 1(2), 309–44.</div>
+        <div class="ref-item">Graham, P. (2008) How to Disagree, https://paulgraham.com/disagree.html</div>
+        <div class="ref-item">Harris, D. (2019). <em>Literature Review and Research Design: A Guide to Effective Research Practice</em>. Routledge.</div>
+        <div class="ref-item">Johan Lor, P. (2014). Revitalizing Comparative Library and Information Science: Theory And Metatheory. <em>Journal of Documentation</em>, 70(1), 25–51.</div>
+        <div class="ref-item">Lichbach, M. I., and Zuckerman, A. S. (2009). <em>Comparative Politics: Rationality, Culture, and Structure</em> (2nd ed.). Cambridge University Press.</div>
+        <div class="ref-item">Sartori, G. (2004). Where is political science going?. <em>PS: Political Science & Politics</em>, 37(4), 785–7.</div>
+        <div class="ref-item">アーメッド, S.（著）、飯田麻結（訳）（2022）『フェミニスト・キルジョイ：フェミニズムを生きるということ』人文書院。</div>
+        <div class="ref-item">アドラー, J. M.、ドーレン, V. C.（著）、外山滋比古、槇未知子（訳）（1997）『本を読む本』講談社学術文庫。</div>
+        <div class="ref-item">阿部幸大（2024）『まったく新しいアカデミック・ライティングの教科書』光文社。</div>
+        <div class="ref-item">アルヴェッソン, M.、サンドバーグ, J.（著）、佐藤郁哉（訳）（2023）『面白くて刺激的な論文のためのリサーチ・クエスチョンの作り方と育て方』白桃書房。</div>
+        <div class="ref-item">アンダーソン, R.（著）、宮入暢子（訳）（2022）『学術コミュニケーション入門：知っているようで知らない128の疑問』アドスリー。</div>
+        <div class="ref-item">バイヤール, P.（著）、大浦康介（訳）（2016）『読んでいない本について堂々と語る方法』筑摩書房。</div>
+        <div class="ref-item">佐藤郁哉（2024）『リサーチ・クエスチョンとは何か？』ちくま新書。</div>
+        <div class="ref-item">曽我謙悟（2014a; 2014b; 2015）「先行研究を読むとはいかなる営みなのか――大学院新入生への1つのアドバイス（上・中・下）」『書斎の窓』(635; 636; 637)。</div>
+        <div class="ref-item">戸田山和久（2022）『最新版 論文の教室：レポートから卒論まで』NHKブックス。</div>
+        <div class="ref-item">野村康（2017）『社会科学の考え方：認識論、リサーチ・デザイン、手法』名古屋大学出版会。</div>
+        <div class="ref-item">松沢裕作・高嶋修一（編）（2022）『日本近・現代史研究入門』岩波書店。</div>
+        <div class="ref-item">林紘一郎・名和小太郎（2009）『引用する極意　引用される極意』勁草書房。</div>
+
+        <p style="font-size:.75rem; color:var(--ink-muted); margin-top:1.5rem; border-top:1px solid var(--rule); padding-top:1rem;">
+          ※筆者に無断での再頒布・共有等は固くお断りいたします。
+        </p>
+      </section>
+
+      <a href="#top" class="back-top">↑ トップへ戻る</a>
+
+    </div><!-- /content -->
+  </main>
+</div><!-- /site-layout -->
+
+<button class="toc-toggle" id="tocToggle" aria-label="目次を開く">☰</button>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('progressBar').style.width = scrolled + '%';
+  });
+
+  // TOC toggle (mobile)
+  const tocToggle = document.getElementById('tocToggle');
+  const tocSidebar = document.getElementById('tocSidebar');
+  tocToggle.addEventListener('click', () => {
+    tocSidebar.classList.toggle('open');
+  });
+
+  // Close sidebar when link clicked on mobile
+  tocSidebar.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 900) {
+        tocSidebar.classList.remove('open');
+      }
+    });
+  });
+
+  // Active TOC link on scroll
+  const sections = document.querySelectorAll('[id]');
+  const tocLinks = document.querySelectorAll('.toc-nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector(`.toc-nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0% -80% 0%' });
+
+  sections.forEach(section => observer.observe(section));
+</script>
+</body>
+</html>
