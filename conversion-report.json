@@ -1,0 +1,22 @@
+{
+  "source": "論文の批判的読解のために_20250516_Isaki.docx",
+  "output": "index.html",
+  "main_text_nodes_source": 4241,
+  "main_text_nodes_preserved_in_order_whitespace_normalized": true,
+  "main_text_misses": [],
+  "footnote_text_nodes_source": 266,
+  "footnote_text_nodes_preserved_in_order_whitespace_normalized": true,
+  "footnote_text_misses": [],
+  "footnotes_source": 37,
+  "footnote_references_html": 37,
+  "footnote_items_html": 37,
+  "tables_source": 16,
+  "tables_html": 16,
+  "images_source": 6,
+  "images_html": 6,
+  "all_images_embedded": true,
+  "image_hashes_match_extracted_media": true,
+  "lang": "ja",
+  "title": "アカデミック・リーディングの作法・技法・用法：学術文献の批判的読解と共生のために",
+  "passed": true
+}
